@@ -30,7 +30,7 @@ namespace ToCoTestWin
                 return;
             }
             uint srcAddr = BitConverter.ToUInt32(packet, 3);
-            Console.WriteLine("Source Address: {0}, LQI: {1}", srcAddr, packet[7]);
+            Console.WriteLine("Source Address: {0}, LQI: {1} ({2}%)", srcAddr, packet[7], ((packet[7] / 255.0f) * 100));
             Packet p = new Packet();
             p.srcAddr = srcAddr;
             p.LQI = packet[7];
