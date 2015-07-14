@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Packet.cs" />
     <Compile Include="PacketInputHandler.cs" />
     <Compile Include="MainClass.cs" />
+    <Compile Include="PacketParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialInput.cs" />

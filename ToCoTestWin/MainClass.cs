@@ -9,6 +9,7 @@ namespace ToCoTestWin
 {
     class MainClass
     {
+        private PacketParser parser = new PacketParser();
         public MainClass()
         {
             // 入力クラスを用意する
@@ -24,33 +25,37 @@ namespace ToCoTestWin
 
         private void OnPacketArrive(object sender, DataArriveEventArgs e)
         {
-            Console.WriteLine(BitConverter.ToString(e.data));
             Debug.WriteLine(BitConverter.ToString(e.data));
+            // パケットデータをコピー
             byte[] data = e.data;
+
+            // パケット長のバリデーション
             if (data.Length < 3)
             {
                 // 1,2個しかこない(Lengthまできてない)
+                // パケットを破棄
                 Console.WriteLine("Invaid dataLength(size: {0})", data.Length);
                 return;
             }
             if ((data[0] == 0x99) && (data[1] == 0x97))
             {
-                Console.WriteLine("Node Data CRC16 Error(Master Firm)");
+                // ToCoStickからNodeのCRCが一致しなかったとの連絡
+                // パケットを破棄
+                Console.WriteLine("Node Data CRC16 Error(from Master Firm)");
                 return;
             }
+            // 正規のmagic byte
             if ((data[0] == 0x99) && (data[1] == 0x98))
             {
+                // パケット長の確認
                 if (data[2] != data.Length)
                 {
+                    // パケット長が異なるため、破棄
                     Console.WriteLine("Invaid dataLength(except: {0}, actual: {1})", data.Length, (int)data[2]);
                     return;
                 }
-                // ここから下、パケットパーサークラスを作って処理する？
-                // 正規パケットのようなのでCRC16を計算する
-                ushort crc = (ushort)((data[data.Length - 1] << 8) | data[data.Length - 2]);
-                ushort c_crc = Util.CRC16_CCITT(data, data.Length - 2);
-                //Debug.WriteLine("CRC except: {0}, actual: {1}", c_crc, crc);
-
+                parser.SetPacket(data);
+                parser.ParsePacket();
             }
         }
 
