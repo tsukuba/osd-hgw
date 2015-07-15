@@ -43,15 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AM2320.cs" />
-    <Compile Include="BME280.cs" />
+    <Compile Include="Sensor\AM2320.cs" />
+    <Compile Include="Sensor\BME280.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="PacketInputHandler.cs" />
     <Compile Include="MainClass.cs" />
     <Compile Include="PacketParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sensor.cs" />
+    <Compile Include="Sensor\Sensor.cs" />
     <Compile Include="SerialInput.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
