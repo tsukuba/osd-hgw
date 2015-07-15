@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AM2320.cs" />
+    <Compile Include="BME280.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="PacketInputHandler.cs" />
     <Compile Include="MainClass.cs" />
