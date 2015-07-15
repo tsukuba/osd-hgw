@@ -35,6 +35,7 @@ namespace ToCoTestWin
             p.srcAddr = srcAddr;
             p.LQI = packet[7];
             p.Cmd = BitConverter.ToUInt16(packet, 9);
+            if (p.Cmd == 0) return;
             p.payload = new byte[packet[11]];
             Array.Copy(packet, 12, p.payload, 0, packet[11]);
             p.DebugData();
