@@ -22,10 +22,6 @@ namespace ToCoTestWin
 
         public void ShowData()
         {
-            float c_temp, c_hum;
-            c_temp = Temp / 10.0f;
-            c_hum = Humidity / 10.0f;
-            //Console.WriteLine("Temp: {0} / Humidity: {1}", c_temp.ToString(), c_hum.ToString());
             Console.WriteLine("Temp: {0} / Humidity: {1}", Temp / 10.0f, Humidity / 10.0f);
         }
     }
