@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToCoTestWin
+namespace ToCoTestWin.Sensors
 {
-    class BME280 : _Sensor
+    class BME280 : Sensor
     {
         int Temp, Temp2;
         uint Humidity, Pressure;
+
+        public BME280() : this(null) { }
 
         public BME280(byte[] data) : base(data)
         {

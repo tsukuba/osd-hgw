@@ -18,6 +18,18 @@ namespace ToCoTestWin
             sinput.DataArrive += new SerialInput.DataArriveEventHandler(OnPacketArrive);
             // Serial Port Open
             sinput.portOpen();
+
+            {
+                if (SearchSensorFromID(ary, 0x01) == null)
+                {
+                    Console.WriteLine("Search error");
+                }
+                else
+                {
+                    Console.WriteLine("GO!");
+                }
+            }
+
             Console.ReadLine();
 
             sinput.portClose();

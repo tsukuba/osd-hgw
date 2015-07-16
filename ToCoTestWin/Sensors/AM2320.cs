@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToCoTestWin
+namespace ToCoTestWin.Sensors
 {
-    class AM2320 : _Sensor
+    class AM2320 : Sensor
     {
         ushort Temp;
         ushort Humidity;
+
+        public AM2320() : this(null) { }
 
         public AM2320(byte[] data) : base(data)
         {

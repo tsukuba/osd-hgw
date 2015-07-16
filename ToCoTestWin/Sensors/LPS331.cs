@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToCoTestWin.Sensor
+namespace ToCoTestWin.Sensors
 {
-    class LPS331 : _Sensor
+    class LPS331 : Sensor
     {
         ushort Temp;
         uint Pressure;
 
-        public LPS331(byte[] data) : base(data)
+        public LPS331() : this(null) { }
+
+        public LPS331(byte[] data) : base(data) 
         {
             SensorID = 0x02;
             Pressure = BitConverter.ToUInt32(rawdata, 0);
