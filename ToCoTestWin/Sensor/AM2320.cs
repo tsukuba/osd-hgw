@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ToCoTestWin
 {
-    class AM2320 : Sensor
+    class AM2320 : _Sensor
     {
         ushort Temp;
         ushort Humidity;
