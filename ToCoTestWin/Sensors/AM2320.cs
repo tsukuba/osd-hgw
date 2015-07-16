@@ -10,17 +10,25 @@ namespace ToCoTestWin.Sensors
 {
     class AM2320 : Sensor
     {
-        ushort Temp;
-        ushort Humidity;
+        private ushort Temp;
+        private ushort Humidity;
 
         public AM2320() : this(null) { }
 
         public AM2320(byte[] data) : base(data)
         {
             SensorID = 0x01;
-            // ここでparse
+            if (data != null) { ParseData(); }
+        }
+
+        public override bool ParseData()
+        {
+            if (rawdata == null) return false;
+
             Temp = (ushort)((rawdata[0] << 8) | rawdata[1]);
             Humidity = (ushort)((rawdata[2] << 8) | rawdata[3]);
+
+            return true;
         }
 
         public void ShowData()
