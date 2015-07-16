@@ -15,6 +15,7 @@ namespace ToCoTestWin
 
         public AM2320(byte[] data) : base(data)
         {
+            SensorID = 0x01;
             // ここでparse
             Temp = (ushort)((rawdata[0] << 8) | rawdata[1]);
             Humidity = (ushort)((rawdata[2] << 8) | rawdata[3]);

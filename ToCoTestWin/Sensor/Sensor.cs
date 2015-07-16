@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ToCoTestWin
+﻿namespace ToCoTestWin
 {
     abstract class Sensor
     {
+        public short SensorID { get; protected set; }
         // シリアルからの生データ
         protected byte[] rawdata;
         // 他、センサ固有データはそれぞれのクラスで扱う

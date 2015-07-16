@@ -13,6 +13,7 @@ namespace ToCoTestWin
 
         public BME280(byte[] data) : base(data)
         {
+            SensorID = 0x02;
             Temp = BitConverter.ToInt32(data, 0);
             Humidity = BitConverter.ToUInt32(data, 4);
             Pressure = BitConverter.ToUInt32(data, 8);
