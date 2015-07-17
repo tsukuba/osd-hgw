@@ -4,23 +4,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ToCoTestWin.Sensors;
 
 namespace ToCoTestWin
 {
     class PacketParser
     {
         private byte[] packet;
+        private Queue<ushort> sensorQueue;
+        private List<Sensor> sensors;
         public PacketParser() { }
 
         public void SetPacket(byte[] data)
         {
             packet = data;
+            sensors.Add(new AM2320());
+            sensors.Add(new BME280());
+            sensors.Add(new LPS331());
         }
 
         public void ParsePacket()
         {
             // 正規パケットのようなのでCRC16を計算する
-            ushort crc = (ushort)((packet[packet.Length - 1] << 8) | packet[packet.Length - 2]);
+            ushort crc = BitConverter.ToUInt16(packet, packet.Length - 2);
             ushort c_crc = Util.CRC16_CCITT(packet, packet.Length - 2);
             if (c_crc != crc)
             {
@@ -35,10 +41,30 @@ namespace ToCoTestWin
             p.srcAddr = srcAddr;
             p.LQI = packet[7];
             p.Cmd = BitConverter.ToUInt16(packet, 9);
-            if (p.Cmd == 0) return;
             p.payload = new byte[packet[11]];
-            Array.Copy(packet, 12, p.payload, 0, packet[11]);
-            p.DebugData();
+            // HELLO Packet
+            if (p.Cmd == 0) return;
+            // PacketQueue
+            if (p.Cmd == 1)
+            {
+                for (int i = 0; i < p.payload.Length; i+=2)
+                {
+                    sensorQueue.Enqueue(BitConverter.ToUInt16(p.payload, i));
+                }
+                return;
+            }
+            if (p.Cmd == 2)
+            {
+                // ヘッダダンプ
+                p.DebugData();
+                // 0-1
+                ushort sensorID = BitConverter.ToUInt16(p.payload, 0);
+                Sensor s = SensorUtil.SearchSensorFromID(sensors, sensorID);
+                byte[] data = new byte[p.payload.Length - 2];
+                Array.Copy(p.payload, 2, data, 0, p.payload.Length - 2);
+                s.SetData(data);
+                s.ParseData();
+            }
         }
     }
 }

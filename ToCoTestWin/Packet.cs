@@ -24,13 +24,6 @@ namespace ToCoTestWin
             Debug.WriteLine("srcAddr: {0}", srcAddr);
             Debug.WriteLine("LQI: {0} ({1}%)", LQI, 255.0f / LQI);
             Debug.WriteLine("Cmd: {0}", Cmd);
-            List<Sensor> ary = new List<Sensor>();
-            //Debug.WriteLine("payload: {0}", BitConverter.ToString(payload));
-            //AM2320 sensor = new AM2320(payload);
-            //BME280 sensor = new BME280(payload);
-            ary.Add(new BME280());
-            ary.Add(new AM2320());
-            //sensor.ShowData();
         }
     }
 }

@@ -21,5 +21,6 @@
         }
 
         public abstract bool ParseData();
+        public void SetData(byte[] data) { rawdata = data; }
     }
 }
