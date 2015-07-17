@@ -25,8 +25,8 @@ namespace ToCoTestWin.Sensors
         {
             if (rawdata == null) return false;
 
-            Temp = (ushort)((rawdata[0] << 8) | rawdata[1]);
-            Humidity = (ushort)((rawdata[2] << 8) | rawdata[3]);
+            Temp = BitConverter.ToUInt16(rawdata, 0);
+            Humidity = BitConverter.ToUInt16(rawdata, 2);
 
             return true;
         }
