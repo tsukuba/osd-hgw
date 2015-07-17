@@ -13,7 +13,13 @@ namespace ToCoTestWin
         private byte[] packet;
         private Queue<ushort> sensorQueue;
         private List<Sensor> sensors;
-        public PacketParser() { }
+        private int state;
+        public PacketParser()
+        {
+            sensors = new List<Sensor>();
+            sensorQueue = new Queue<ushort>();
+            state = 0;
+        }
 
         public void SetPacket(byte[] data)
         {
@@ -42,6 +48,8 @@ namespace ToCoTestWin
             p.LQI = packet[7];
             p.Cmd = BitConverter.ToUInt16(packet, 9);
             p.payload = new byte[packet[11]];
+            Array.Copy(packet, 12, p.payload, 0, packet[11]);
+            p.DebugData();
             // HELLO Packet
             if (p.Cmd == 0) return;
             // PacketQueue
@@ -51,12 +59,11 @@ namespace ToCoTestWin
                 {
                     sensorQueue.Enqueue(BitConverter.ToUInt16(p.payload, i));
                 }
+                state = 1;
                 return;
             }
             if (p.Cmd == 2)
             {
-                // ヘッダダンプ
-                p.DebugData();
                 // 0-1
                 ushort sensorID = BitConverter.ToUInt16(p.payload, 0);
                 Sensor s = SensorUtil.SearchSensorFromID(sensors, sensorID);
@@ -64,6 +71,8 @@ namespace ToCoTestWin
                 Array.Copy(p.payload, 2, data, 0, p.payload.Length - 2);
                 s.SetData(data);
                 s.ParseData();
+                s.ShowData();
+                state = 0;
             }
         }
     }

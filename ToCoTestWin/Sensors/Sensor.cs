@@ -16,11 +16,12 @@
 
         public Sensor(byte[] data)
         {
-            rawdata = data;
+            if (data != null) rawdata = data;
             IsParsed = false;
         }
 
         public abstract bool ParseData();
+        public abstract void ShowData();
         public void SetData(byte[] data) { rawdata = data; }
     }
 }

@@ -18,7 +18,7 @@ namespace ToCoTestWin.Sensors
         public AM2320(byte[] data) : base(data)
         {
             SensorID = 0x01;
-            if (data != null) { ParseData(); }
+            if (data != null) ParseData();
         }
 
         public override bool ParseData()
@@ -31,7 +31,7 @@ namespace ToCoTestWin.Sensors
             return true;
         }
 
-        public void ShowData()
+        public override void ShowData()
         {
             Console.WriteLine("Temp: {0} / Humidity: {1}", Temp / 10.0f, Humidity / 10.0f);
         }

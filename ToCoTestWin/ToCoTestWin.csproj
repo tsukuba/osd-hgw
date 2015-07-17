@@ -53,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sensors\LPS331.cs" />
     <Compile Include="Sensors\Sensor.cs" />
+    <Compile Include="Sensors\SensorUtil.cs" />
     <Compile Include="SerialInput.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>

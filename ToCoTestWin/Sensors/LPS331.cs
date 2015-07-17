@@ -19,7 +19,7 @@ namespace ToCoTestWin.Sensors
             if (data != null) { ParseData(); }
         }
 
-        public void ShowData()
+        public override void ShowData()
         {
             double press, temp;
             if ((Pressure & (1 << 23)) != 0)

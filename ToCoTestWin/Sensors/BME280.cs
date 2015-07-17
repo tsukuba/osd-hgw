@@ -19,7 +19,7 @@ namespace ToCoTestWin.Sensors
             if (data != null) { ParseData(); }
         }
 
-        public void ShowData()
+        public override void ShowData()
         {
             Console.WriteLine("Temp: {0}, Hum: {1}, Pre: {2}", Temp/100.0f, Humidity/1024.0f, Pressure/100.0f);
             Console.WriteLine("Temp: {0}, Hum: {1}, Pre: {2}", Temp, Humidity, Pressure);
