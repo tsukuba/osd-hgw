@@ -14,7 +14,7 @@ namespace ToCoTestWin
         {
             // 入力クラスを用意する
             // データ到着時のイベントを登録
-            SerialInput sinput = new SerialInput("COM9");
+            SerialInput sinput = new SerialInput("COM5");
             sinput.DataArrive += new SerialInput.DataArriveEventHandler(OnPacketArrive);
             // Serial Port Open
             sinput.portOpen();

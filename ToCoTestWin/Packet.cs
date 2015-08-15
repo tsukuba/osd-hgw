@@ -22,7 +22,7 @@ namespace ToCoTestWin
         public void DebugData()
         {
             Debug.WriteLine("srcAddr: {0}", srcAddr);
-            Debug.WriteLine("LQI: {0} ({1}%)", LQI, 255.0f / LQI);
+            Debug.WriteLine("LQI: {0} ({1}%)", LQI, (LQI / 255.0f) * 100.0f);
             Debug.WriteLine("Cmd: {0}", Cmd);
         }
     }

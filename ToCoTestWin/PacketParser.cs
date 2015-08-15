@@ -31,6 +31,7 @@ namespace ToCoTestWin
 
         public void ParsePacket()
         {
+            Console.WriteLine("Packet Arrive(Parseing...) Date: {0}", DateTime.Now.ToString());
             // 正規パケットのようなのでCRC16を計算する
             ushort crc = BitConverter.ToUInt16(packet, packet.Length - 2);
             ushort c_crc = Util.CRC16_CCITT(packet, packet.Length - 2);
@@ -47,14 +48,18 @@ namespace ToCoTestWin
             p.srcAddr = srcAddr;
             p.LQI = packet[7];
             p.Cmd = BitConverter.ToUInt16(packet, 9);
-            p.payload = new byte[packet[11]];
-            Array.Copy(packet, 12, p.payload, 0, packet[11]);
+            p.payload = new byte[BitConverter.ToUInt16(packet, 11)];
+            Array.Copy(packet, 13, p.payload, 0, packet[11]);
             p.DebugData();
             // HELLO Packet
-            if (p.Cmd == 0) return;
+            if (p.Cmd == 0)
+            {
+                Console.WriteLine("Hello Packet");
+            }
             // PacketQueue
             if (p.Cmd == 1)
             {
+                sensorQueue.Clear();
                 for (int i = 0; i < p.payload.Length; i+=2)
                 {
                     sensorQueue.Enqueue(BitConverter.ToUInt16(p.payload, i));
@@ -64,9 +69,17 @@ namespace ToCoTestWin
             }
             if (p.Cmd == 2)
             {
+                ushort sensorID;
+                //if (state == 1) sensorID = sensorQueue.Dequeue();
+                //else return;
                 // 0-1
-                ushort sensorID = BitConverter.ToUInt16(p.payload, 0);
+                sensorID = BitConverter.ToUInt16(p.payload, 0);
                 Sensor s = SensorUtil.SearchSensorFromID(sensors, sensorID);
+                if (s == null)
+                {
+                    Debug.WriteLine("Sensor Error {0}", sensorID);
+                    return;
+                }
                 byte[] data = new byte[p.payload.Length - 2];
                 Array.Copy(p.payload, 2, data, 0, p.payload.Length - 2);
                 s.SetData(data);
